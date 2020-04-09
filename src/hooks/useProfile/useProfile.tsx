@@ -1,10 +1,12 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../modules';
+import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import { loadUserAsync } from '../../modules/user/actions';
 
 export default function useProfile() {
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.user.userResponse,
-  );
+  const dispatch = useDispatch();
+  const me = useCallback(() => {
+    dispatch(loadUserAsync.request(null));
+  }, [dispatch]);
 
-  return { data, loading, error };
+  return { me };
 }

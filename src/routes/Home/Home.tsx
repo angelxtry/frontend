@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import LoginFacebook from '../../components/LoginFacebook';
-import useLogin from '../../hooks/useLogin';
-import { UserInfo } from '../../api/user';
+import { useSelector } from 'react-redux';
 import useProfile from '../../hooks/useProfile';
+import { RootState } from '../../modules';
+import useLogin from '../../hooks/useLogin';
+import { UserInfo } from '../../api/userApi';
+import LoginFacebook from '../../components/LoginFacebook';
 
 export default function Home() {
   const { login } = useLogin();
+  const { me } = useProfile();
   const callback = (userInfo: UserInfo) => {
-    console.log({ userInfo });
     login(userInfo);
   };
+  const { isLoggedIn } = useSelector((state: RootState) => state.userStore);
+  const { data: userResponse } = useSelector(
+    (state: RootState) => state.userStore.user,
+  );
+  const token = localStorage.getItem('token');
 
-  const { data } = useProfile();
+  useEffect(() => {
+    if (isLoggedIn || token) {
+      me();
+    }
+  }, [isLoggedIn, token, me]);
 
   return (
     <div>
@@ -22,8 +33,8 @@ export default function Home() {
       <div>
         <Link to="/posts">Posts!</Link>
       </div>
-      {data?.data.token ? (
-        <div>Logged In.</div>
+      {userResponse?.data.id ? (
+        <div>Welcome {userResponse.data.name}</div>
       ) : (
         <div>
           <LoginFacebook callback={callback} />

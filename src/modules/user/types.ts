@@ -1,10 +1,12 @@
 import { ActionType } from 'typesafe-actions';
 import { AsyncState } from '../lib/reducerUtils';
 import * as actions from './actions';
-import { UserResponse } from '../../api/user';
+import { LoginResponse, UserResponse } from '../../api/userApi';
 
 export type UserState = {
-  userResponse: AsyncState<UserResponse, Error>;
+  isLoggedIn: boolean;
+  login: AsyncState<LoginResponse, Error>;
+  user: AsyncState<UserResponse, Error>;
 };
 
 export type UserAction = ActionType<typeof actions>;

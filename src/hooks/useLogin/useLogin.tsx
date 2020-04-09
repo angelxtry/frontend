@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginAsync } from '../../modules/user/actions';
-import { UserInfo } from '../../api/user';
+import { UserInfo } from '../../api/userApi';
 
 export default function useLogin() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React from 'react';
 import FacebookLogin, { ReactFacebookLoginInfo } from 'react-facebook-login';
-import { UserInfo, SNS_DIV } from '../../api/user';
+import { UserInfo, SNS_DIV } from '../../api/userApi';
 
 interface LoginFacebookProps {
   callback: (fbResponse: UserInfo) => void;
